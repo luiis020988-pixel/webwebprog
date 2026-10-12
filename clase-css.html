@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Clase de CSS: ejemplos en vivo</title>
+<style>
+/* ========== VARIABLES + MODO OSCURO (nivel alto) ========== */
+:root {
+  --fondo: #f6f4ef;
+  --papel: #ffffff;
+  --texto: #1d2433;
+  --suave: #5b6478;
+  --acento: #1f6feb;
+  --acento-2: #e0457b;
+  --borde: #d9d6cc;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --fondo: #12151c;
+    --papel: #1b202b;
+    --texto: #e8eaf0;
+    --suave: #9aa3b5;
+    --borde: #2c3342;
+    --acento: #6ea8ff;
+  }
+}
+
+/* ========== BÁSICO ========== */
+* { box-sizing: border-box; }               /* modelo de caja recomendado */
+body {
+  margin: 0;
+  font-family: Georgia, "Times New Roman", serif;
+  line-height: 1.6;
+  background: var(--fondo);
+  color: var(--texto);
+}
+h1 { font-size: clamp(1.8rem, 5vw, 3.2rem); line-height: 1.1; margin: 0 0 .5rem; }  /* clamp: tamaño fluido */
+h2 { font-size: 1.6rem; margin: 0 0 .25rem; }
+h3 { font-size: 1.05rem; margin: 1.2rem 0 .4rem; font-family: system-ui, sans-serif; }
+p  { margin: 0 0 .8rem; max-width: 70ch; }
+code, pre { font-family: ui-monospace, Consolas, monospace; font-size: .85rem; }
+pre {
+  background: var(--texto); color: var(--fondo);
+  padding: .8rem 1rem; border-radius: 6px; overflow-x: auto; margin: .5rem 0 1rem;
+}
+code { background: var(--borde); padding: .1rem .35rem; border-radius: 4px; }
+pre code { background: none; padding: 0; }
+
+/* ========== POSICIONAMIENTO: sticky ========== */
+.cabecera {
+  position: sticky; top: 0; z-index: 10;
+  background: var(--papel);
+  border-bottom: 1px solid var(--borde);
+}
+
+/* ========== FLEXBOX (nivel medio) ========== */
+.menu {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  padding: .7rem 1.2rem;
+  font-family: system-ui, sans-serif;
+}
+.menu nav { display: flex; gap: 1rem; flex-wrap: wrap; }
+.menu a { color: var(--texto); text-decoration: none; }
+.menu a:not(.boton):hover { text-decoration: underline; }   /* :not() */
+
+/* ========== TRANSICIONES + PSEUDOCLASES ========== */
+.boton {
+  display: inline-block;
+  background: var(--acento);
+  color: #fff !important;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 6px;
+  font: inherit;
+  cursor: pointer;
+  transition: background .3s, transform .15s;
+}
+.boton:hover  { background: #0f4fb5; }
+.boton:active { transform: scale(.97); }
+.boton:focus-visible { outline: 3px solid var(--acento-2); outline-offset: 2px; }
+
+/* ========== DISEÑO DE PÁGINA ========== */
+main { max-width: 1000px; margin: 0 auto; padding: 0 1.2rem 4rem; }
+.hero { padding: 3rem 0 1.5rem; }
+.hero p { color: var(--suave); }
+section { padding: 1.5rem 0; border-top: 1px solid var(--borde); }
+.nivel { font-family: system-ui, sans-serif; font-size: .8rem; color: var(--suave); }
+
+/* ========== MODELO DE CAJA ========== */
+.caja {
+  width: 300px; max-width: 100%;
+  padding: 20px;
+  border: 2px solid var(--texto);
+  margin: 20px auto;          /* centra horizontalmente */
+  border-radius: 8px;
+  background: var(--papel);
+}
+
+/* ========== SELECTORES ========== */
+.demo-selectores p { margin: 0; }
+.demo-selectores .clase-demo { color: var(--acento); }
+#id-demo { font-weight: bold; }
+.demo-selectores > p:nth-child(odd) { background: color-mix(in srgb, var(--borde) 50%, transparent); }
+.demo-selectores p::first-line { letter-spacing: .03em; }
+
+/* ========== UNIDADES ========== */
+.unidades div {
+  background: var(--acento); color: #fff; padding: .4rem .8rem;
+  margin-bottom: 6px; font-family: system-ui, sans-serif; font-size: .85rem;
+}
+.u-px  { width: 200px; }
+.u-pct { width: 50%; }
+.u-rem { width: 20rem; max-width: 100%; }
+.u-vw  { width: 40vw; }
+
+/* ========== GRID ========== */
+.galeria {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+.item {
+  background: var(--papel); border: 1px solid var(--borde); border-radius: 8px;
+  padding: 1.5rem 1rem; text-align: center; font-family: system-ui, sans-serif;
+}
+.auto-grid {                                  /* adaptable sin media queries */
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 16px;
+}
+
+/* ========== FLEX EXTRA ========== */
+.fila { display: flex; gap: 10px; }
+.fila.centrado { justify-content: center; align-items: center; height: 100px;
+  background: var(--papel); border: 1px dashed var(--suave); border-radius: 8px; }
+.fila div { background: var(--acento-2); color: #fff; padding: .6rem 1rem; border-radius: 6px;
+  font-family: system-ui, sans-serif; }
+
+/* ========== POSICIÓN ABSOLUTE ========== */
+.relativa { position: relative; background: var(--papel); border: 1px solid var(--borde);
+  border-radius: 8px; padding: 1.5rem; }
+.insignia { position: absolute; top: 10px; right: 10px; background: var(--acento-2);
+  color: #fff; font: .75rem system-ui, sans-serif; padding: 2px 10px; border-radius: 99px; }
+
+/* ========== ANIMACIÓN ========== */
+@keyframes aparecer {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.animada { animation: aparecer .8s ease-out both; }
+@media (prefers-reduced-motion: reduce) { .animada { animation: none; } }
+
+/* ========== :has() ========== */
+.tarjeta-has { background: var(--papel); border: 1px solid var(--borde); border-radius: 8px; padding: 1rem; }
+.tarjeta-has:has(.marca) { border-color: var(--acento-2); border-width: 3px; }
+.marca { color: var(--acento-2); font-weight: bold; }
+
+/* ========== CONTAINER QUERIES ========== */
+.contenedor { container-type: inline-size; resize: horizontal; overflow: auto;
+  border: 1px dashed var(--suave); padding: 10px; max-width: 100%; min-width: 200px; }
+.tarjeta-cq { background: var(--papel); padding: 1rem; border-radius: 8px; font-family: system-ui, sans-serif; }
+@container (min-width: 400px) {
+  .tarjeta-cq { display: flex; gap: 1rem; align-items: center; background: var(--acento); color: #fff; }
+}
+
+/* ========== EFECTOS: vidrio y degradado ========== */
+.fondo-efecto { padding: 2rem 1rem; border-radius: 10px;
+  background: linear-gradient(135deg, #6366f1, #ec4899);
+  display: flex; gap: 1rem; flex-wrap: wrap; font-family: system-ui, sans-serif; }
+.vidrio { flex: 1 1 200px; padding: 1.2rem; color: #fff; border-radius: 10px;
+  background: rgba(255,255,255,.15);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 8px 32px rgba(0,0,0,.2); }
+
+/* ========== CASCADA ========== */
+p.cascada { color: gray; }
+.cascada { color: green; }
+#cascada-id { color: crimson; }
+
+/* ========== MEDIA QUERY (nivel medio) ========== */
+@media (max-width: 768px) {
+  .galeria { grid-template-columns: 1fr; }
+  .menu { flex-direction: column; }
+  .u-vw { width: 80vw; }
+}
+</style>
+</head>
+<body>
+
+<header class="cabecera">
+  <div class="menu">
+    <strong>Clase de CSS</strong>
+    <nav>
+      <a href="#basico">Básico</a>
+      <a href="#medio">Medio</a>
+      <a href="#alto">Alto</a>
+      <a href="#cascada">Cascada</a>
+    </nav>
+    <a class="boton" href="#basico">Empezar</a>
+  </div>
+</header>
+
+<main>
+  <div class="hero animada">
+    <h1>CSS en una sola página</h1>
+    <p>Cada bloque está estilizado con la técnica que explica. Abre el código fuente (clic derecho, "Ver código fuente") y compara. Cambia el ancho de la ventana para ver el diseño responsivo, y activa el modo oscuro de tu sistema para ver las variables en acción.</p>
+  </div>
+
+  <!-- ================= BÁSICO ================= -->
+  <section id="basico">
+    <h2>Nivel básico</h2>
+    <p class="nivel">Sintaxis, selectores, unidades y modelo de caja.</p>
+
+    <h3>Sintaxis: selector { propiedad: valor; }</h3>
+<pre><code>h1 {
+  color: blue;
+  font-size: 32px;
+}</code></pre>
+
+    <h3>Tres formas de aplicar estilos</h3>
+    <p style="color: var(--acento-2);">En línea: este párrafo usa el atributo <code>style</code>.</p>
+    <p>Interna: todo el bloque <code>&lt;style&gt;</code> de esta página. Externa: <code>&lt;link rel="stylesheet" href="estilos.css"&gt;</code> (la recomendada).</p>
+
+    <h3>Selectores: etiqueta, clase, id, hijo, pseudoelemento</h3>
+    <div class="demo-selectores">
+      <p>Párrafo por etiqueta (<code>p</code>), con ::first-line.</p>
+      <p class="clase-demo">Párrafo por clase (<code>.clase-demo</code>).</p>
+      <p id="id-demo">Párrafo por id (<code>#id-demo</code>).</p>
+      <p>Filas alternas con <code>:nth-child(odd)</code>.</p>
+    </div>
+
+    <h3>Unidades: px, %, rem, vw</h3>
+    <div class="unidades">
+      <div class="u-px">200px</div>
+      <div class="u-pct">50%</div>
+      <div class="u-rem">20rem</div>
+      <div class="u-vw">40vw</div>
+    </div>
+
+    <h3>Modelo de caja: content + padding + border + margin</h3>
+    <div class="caja">Caja de 300px con padding de 20px, borde de 2px y <code>margin: 20px auto</code>.</div>
+  </section>
+
+  <!-- ================= MEDIO ================= -->
+  <section id="medio">
+    <h2>Nivel medio</h2>
+    <p class="nivel">Pseudoclases, Flexbox, Grid, posicionamiento y diseño responsivo.</p>
+
+    <h3>Pseudoclases y transiciones (pasa el cursor, haz clic)</h3>
+    <button class="boton">Botón con :hover y :active</button>
+
+    <h3>Flexbox: centrado en ambos ejes</h3>
+    <div class="fila centrado">
+      <div>Uno</div><div>Dos</div><div>Tres</div>
+    </div>
+
+    <h3>Grid: 3 columnas (1 columna en celular)</h3>
+    <div class="galeria">
+      <div class="item">Elemento 1</div>
+      <div class="item">Elemento 2</div>
+      <div class="item">Elemento 3</div>
+      <div class="item">Elemento 4</div>
+      <div class="item">Elemento 5</div>
+      <div class="item">Elemento 6</div>
+    </div>
+
+    <h3>Posicionamiento: absolute dentro de relative (el menú de arriba usa sticky)</h3>
+    <div class="relativa">
+      Tarjeta con <code>position: relative</code>.
+      <span class="insignia">Nuevo</span>
+    </div>
+
+    <h3>Media query</h3>
+    <pre><code>@media (max-width: 768px) {
+  .galeria { grid-template-columns: 1fr; }
+}</code></pre>
+  </section>
+
+  <!-- ================= ALTO ================= -->
+  <section id="alto">
+    <h2>Nivel alto</h2>
+    <p class="nivel">CSS moderno: variables, animaciones, grid adaptable, selectores y efectos.</p>
+
+    <h3>Variables CSS y modo oscuro</h3>
+    <p>Todos los colores de esta página salen de <code>--fondo</code>, <code>--texto</code> y <code>--acento</code>. Cambia el tema de tu sistema y la página se adapta.</p>
+
+    <h3>Animación con @keyframes</h3>
+    <p class="animada">Este párrafo entra con <code>animation: aparecer .8s</code>. Recarga la página para verlo.</p>
+
+    <h3>Tipografía fluida con clamp()</h3>
+    <p>El título principal usa <code>clamp(1.8rem, 5vw, 3.2rem)</code>: crece con la pantalla dentro de un mínimo y un máximo.</p>
+
+    <h3>Grid adaptable sin media queries (auto-fit + minmax)</h3>
+    <div class="auto-grid">
+      <div class="item">A</div><div class="item">B</div><div class="item">C</div><div class="item">D</div>
+    </div>
+
+    <h3>Selector :has()</h3>
+    <div class="auto-grid">
+      <div class="tarjeta-has">Tarjeta normal.</div>
+      <div class="tarjeta-has">Tarjeta que contiene <span class="marca">una marca</span>, por eso tiene borde de color.</div>
+    </div>
+
+    <h3>Container query (arrastra la esquina inferior derecha para cambiar el ancho)</h3>
+    <div class="contenedor">
+      <div class="tarjeta-cq">Si el contenedor mide 400px o más, la tarjeta cambia a Flexbox.</div>
+    </div>
+
+    <h3>Vidrio (backdrop-filter), sombra y degradado</h3>
+    <div class="fondo-efecto">
+      <div class="vidrio">Tarjeta de vidrio</div>
+      <div class="vidrio">Con blur y box-shadow</div>
+    </div>
+  </section>
+
+  <!-- ================= CASCADA ================= -->
+  <section id="cascada">
+    <h2>La cascada</h2>
+    <p class="nivel">Gana la mayor especificidad; si empatan, la regla que aparece más abajo.</p>
+    <p class="cascada">Etiqueta + clase (<code>p.cascada</code>) contra clase sola (<code>.cascada</code>): gana la primera, gris.</p>
+    <p class="cascada" id="cascada-id">Con <code>#cascada-id</code> gana el id: rojo.</p>
+  </section>
+</main>
+
+</body>
+</html>
